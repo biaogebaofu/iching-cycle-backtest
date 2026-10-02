@@ -3,13 +3,14 @@
 (() => {
   const $ = id => document.getElementById(id);
   const core = window.CycleCore;
-  const history = window.CYCLE_HISTORY;
+  let history = null;
+  let connection = null;
   const DAY = 86400000, TWO_HOURS = 7200000;
   const formatTime = (value, dateOnly = false) => core.formatBeijing(typeof value === 'string' ? Date.parse(value) : value).slice(0, dateOnly ? 10 : 16).replace('T', ' ');
   const calcBias = date => core.calcBias(date);
   const percentage = value => value == null ? '—' : (100 * value).toFixed(2) + '%';
   const price = value => Number(value).toLocaleString('en-US', {maximumFractionDigits:2});
-  const directionName = direction => direction === 1 ? '只多 / 可空仓' : '只空 / 可空仓';
+  const directionName = direction => direction === 1 ? '模型正向（假设）' : '模型反向（假设）';
   const charts = [];
 
   function row(values) {
@@ -40,7 +41,7 @@
       span.className = p.direction === 1 ? 'long' : 'short';
       span.style.flex = (Date.parse(p.end_exclusive) - Date.parse(p.start)) + ' 1 0';
       span.title = formatTime(p.start) + ' → ' + formatTime(p.end_exclusive) + ' · ' + directionName(p.direction);
-      span.textContent = p.direction === 1 ? '多' : '空';
+      span.textContent = p.direction === 1 ? '正' : '反';
       return span;
     }));
   }
@@ -49,10 +50,10 @@
   function signalChartOption(points, predCount, isDaily, isBars) {
   const step = isDaily ? DAY : TWO_HOURS;
   const times = points.map(k => k[0]), prices = points.map(k => k[1]);
-  const last = times[times.length - 1];
+  const last = times.length ? times[times.length - 1] : 0;
   for (let i = 1; i <= predCount; i++) {times.push(last + i * step); prices.push(null);}
   const labels = times.map(t => formatTime(t)), biases = times.map(t => calcBias(new Date(t)));
-  const names = isBars ? ['ETH价格','偏多信号','偏空信号','中性信号'] : ['ETH价格','做多区间','做空区间','Bias'];
+  const names = isBars ? ['ETH价格','偏多信号','偏空信号','中性信号'] : ['ETH价格','正向假设','反向假设','Bias'];
   return {
     animation:false, backgroundColor:'transparent', textStyle:{fontFamily:'Segoe UI, Microsoft YaHei UI, sans-serif'},
     legend:{data:names, top:4, type:'scroll', textStyle:{color:'#bac7d7',fontSize:11}, itemWidth:16, itemHeight:8},
@@ -83,16 +84,18 @@
 
 
   function renderCharts() {
+    if (!history) return;
     if (!window.echarts) { $('chartStatus').textContent = '图表组件未加载。日历与回测仍可使用；离线时请检查完整解压了 assets 文件夹。'; return; }
     const range = $('range1').value, future = Number($('predDays').value);
     const first = range === 'all' ? history.prices : history.prices.slice(-Number(range) * 12);
     const daily = history.daily_prices.filter(p => p[0] >= first[0][0]);
     const recent = history.prices.slice(-Number($('range2').value) * 12);
     const last = history.prices[history.prices.length - 1][0];
-    const dailyFuture = future ? Math.floor((last + future * DAY - daily[daily.length - 1][0]) / DAY) : 0;
+    const dailyFuture = future ? Math.floor((last + future * DAY - (daily.length ? daily[daily.length - 1][0] : last)) / DAY) : 0;
     const options = [signalChartOption(first, future * 12, false, false), signalChartOption(daily, dailyFuture, true, true), signalChartOption(recent, future * 12, false, true)];
     ['chart1', 'chartDaily', 'chart2'].forEach((id, i) => {
-      if (!charts[i]) charts[i] = window.echarts.init($(id));
+      if (i === 1 && !daily.length) { $(id).textContent = '没有完整的北京时间自然日数据。'; return; }
+      if (!charts[i]) { $(id).textContent = ''; charts[i] = window.echarts.init($(id)); }
       charts[i].setOption(options[i], {notMerge:true});
     });
     $('chartStatus').textContent = '价格取每根 K 线收盘值；横轴为开盘时间。日线信号在北京时间 00:00 独立计算。拖动图底滑条缩放。';
@@ -106,6 +109,7 @@
     }));
   }
   function runBacktest() {
+    if (!history) return;
     const start = $('startDate').value, end = $('endDate').value;
     const costText = $('costBps').value;
     const costBps = Number(costText);
@@ -140,20 +144,70 @@
     } catch (error) { $('testStatus').textContent = '回测无法完成：' + error.message; }
     finally { button.disabled = false; }
   }
+  function clearData() {
+    if (connection) connection.abort();
+    connection = null;
+    history = null;
+    $('researchOutput').hidden = true;
+    charts.forEach(chart => chart.dispose()); charts.length = 0;
+    ['historyMeta','testHead','testRows','testMetrics','methodNote','testStatus','scheduleRows','timeline','currentDirection','nextDirection','currentUntil','currentOrigin','nextStart','nextEnd'].forEach(id => $(id).replaceChildren());
+    ['startDate','endDate'].forEach(id => { $(id).value = ''; $(id).min = ''; $(id).max = ''; });
+    $('clearMarket').disabled = true;
+    $('apiRegion').disabled = $('historyDays').disabled = false;
+  }
+  function canConnect() { return $('jurisdiction').value === 'eligible' && $('eligibilityAck').checked; }
+  function updateEligibility() {
+    clearData();
+    $('connectMarket').disabled = !canConnect();
+    $('connectionStatus').textContent = $('jurisdiction').value === 'mainland' ? '中国大陆不提供本工具的行情连接、模型日历和回测。请勿规避地区限制。' : canConnect() ? '可主动发起请求；尚未连接 OKX。请确认所选官方服务区域适用于你。' : '尚未连接。受限地区或未确认适用条件时，不提供连接与计算。';
+  }
+  async function connectMarket() {
+    if (!canConnect() || connection) return;
+    clearData();
+    const controller = new AbortController(); connection = controller;
+    $('connectMarket').disabled = true; $('clearMarket').disabled = false;
+    $('apiRegion').disabled = $('historyDays').disabled = true;
+    $('connectionStatus').textContent = '正在读取已收盘公开行情；可随时取消。';
+    try {
+      const result = await window.CycleMarket.load({baseUrl:$('apiRegion').value, days:Number($('historyDays').value), signal:controller.signal, onProgress:progress => {
+        if (connection === controller) $('connectionStatus').textContent = '正在读取公开行情 · 已完成 ' + progress.requests + ' 次请求。';
+      }});
+      if (connection !== controller || !canConnect()) return;
+      if (result.prices.length < 2) throw new Error('可用已收盘行情不足，未展示计算结果。');
+      history = result;
+      const last = history.prices[history.prices.length - 1];
+      $('historyMeta').textContent = history.symbol + ' · 本次取得 ' + history.prices.length.toLocaleString() + ' 根 2H K 线 · 开盘时间范围 ' + formatTime(history.prices[0][0]) + ' 至 ' + formatTime(last[0]) + ' · 最后收盘时间 ' + formatTime(history.updated_at) + ' · 收盘价 ' + price(last[1]) + ' USDT';
+      $('startDate').value = formatTime(history.prices[0][0], true);
+      $('endDate').value = formatTime(history.updated_at, true);
+      $('startDate').min = $('endDate').min = $('startDate').value;
+      $('startDate').max = $('endDate').max = $('endDate').value;
+      $('researchOutput').hidden = false;
+      renderCalendar(); renderCharts();
+      $('testStatus').textContent = '选择口径、日期和成本后，点击“运行回测”。结果仅为娱乐与模型研究。';
+      $('connectionStatus').textContent = '已读取本次数据，不会自动刷新。仅保留于页面内存；刷新页面或点击清除会丢弃。实际覆盖范围见图表上方。';
+    } catch (error) {
+      if (connection !== controller) return;
+      clearData();
+      $('connectionStatus').textContent = '读取停止：' + error.message + ' 若网络、地区、产品或浏览器跨域限制不允许，请停止使用；不要通过代理或改选地区绕过。';
+    } finally {
+      if (connection === controller) connection = null;
+      if (!connection) {
+        $('connectMarket').disabled = !canConnect();
+        $('apiRegion').disabled = $('historyDays').disabled = false;
+      }
+    }
+  }
   try {
-    if (!core || !history || !history.prices.length) throw new Error('资源不完整，请完整解压官方离线包后打开 index.html。');
-    const last = history.prices[history.prices.length - 1];
-    $('historyMeta').textContent = history.symbol + ' · 29,473 根 2H K 线 · 快照截至 ' + formatTime(history.updated_at) + ' · 最后收盘 ' + price(last[1]) + ' USDT';
-    $('startDate').value = formatTime(history.prices[0][0], true);
-    $('startDate').min = $('endDate').min = $('startDate').value;
-    $('startDate').max = $('endDate').max = formatTime(history.updated_at, true);
-    renderCalendar(); renderCharts(); runBacktest();
-    setInterval(() => { $('clock').textContent = formatTime(Date.now()); }, 1000);
-    setInterval(renderCalendar, 60000);
+    if (!core || !window.CycleMarket) throw new Error('资源不完整，请完整解压官方本地包后打开 index.html。');
+    $('clock').textContent = formatTime(Date.now());
+    setInterval(() => { $('clock').textContent = formatTime(Date.now()); if (history) renderCalendar(); }, 60000);
     ['range1','range2','predDays'].forEach(id => $(id).addEventListener('change', renderCharts));
     $('redrawCharts').addEventListener('click', renderCharts);
     $('runBacktest').addEventListener('click', runBacktest);
-    $('testMode').addEventListener('change', runBacktest);
+    $('testMode').addEventListener('change', () => { if (history) { $('testHead').replaceChildren(); $('testRows').replaceChildren(); $('testMetrics').replaceChildren(); $('methodNote').textContent = ''; $('testStatus').textContent = '口径已更改，请点击“运行回测”。'; } });
+    ['jurisdiction','eligibilityAck'].forEach(id => $(id).addEventListener('change', updateEligibility));
+    $('connectMarket').addEventListener('click', connectMarket);
+    $('clearMarket').addEventListener('click', () => { clearData(); $('connectMarket').disabled = !canConnect(); $('connectionStatus').textContent = '已取消请求并清除本次数据。'; });
     const resize = () => charts.forEach(chart => chart.resize());
     window.addEventListener('resize', resize);
     document.querySelector('details.panel').addEventListener('toggle', resize);
