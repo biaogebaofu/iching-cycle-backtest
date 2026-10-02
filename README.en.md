@@ -1,76 +1,66 @@
 # I Ching Cycle Calendar & Backtest · 易经周期日历与回测
 
-[中文](README.md) · [Quick start](docs/QUICKSTART.en.md) · [Illustrated browser guide (Chinese)](https://biaogebaofu.github.io/iching-cycle-backtest/docs/guide.html) · [Privacy](PRIVACY.md) · [Copyright and permitted use](LICENSE)
+[中文](README.md) · [Quick start](docs/QUICKSTART.en.md) · [Data](docs/DATA.md) · [Privacy](PRIVACY.md) · [Use boundaries](docs/RISK_NOTICE.md)
 
-A browser application for viewing the original I Ching time-cycle calendar, signal charts, and historical backtests on computers, tablets, and phones. No programming or trading-account connection is required. The model's validity has not been established. Future rule-based signals are not forecasts of future prices.
+**v0.2.0: for entertainment and model research only. Do not use it for investment decisions. Free of charge, without referral commissions.**
 
-[Use the website](https://biaogebaofu.github.io/iching-cycle-backtest/) · [View the repository](https://github.com/biaogebaofu/iching-cycle-backtest)
+This public source-viewing project experiments with time rules. It targets eligible users outside mainland China. Data access is unavailable to users in mainland China or other restricted locations. The region declaration is self-reported, not IP blocking or a legal eligibility certification.
 
-![Desktop view showing the current and next calendar phases above the historical signal chart](docs/images/01-overview.png)
+[Website](https://biaogebaofu.github.io/iching-cycle-backtest/) · [Repository](https://github.com/biaogebaofu/iching-cycle-backtest) · [Versions and downloads](https://github.com/biaogebaofu/iching-cycle-backtest/releases)
 
-The two cards show “当前日历阶段” (current calendar phase) and “下一阶段” (next phase). Read their effective dates in Beijing time, UTC+08:00. “只多 / 可空仓” means the model labels the phase long-only or flat; “只空 / 可空仓” means short-only or flat. These are rule outputs for research, not instructions to place orders. The current phase follows your device clock, while the historical prices remain a fixed snapshot.
+## Connect before anything is displayed
 
-## For everyday users
+![Default page: purpose notice and a user-initiated connection, without market data or directions](docs/images/01-start.png)
 
-- **Phones, tablets, and computers:** the website is the recommended entry point. Open it in your browser.
-- **Offline on a computer:** download the official offline ZIP from [Releases](https://github.com/biaogebaofu/iching-cycle-backtest/releases), extract the entire archive, and open `index.html` in a browser. Keep its resource files in the same folder structure.
-- **Phone shortcut:** use your browser's Add to Home Screen feature if available. This creates a shortcut; offline availability is not guaranteed.
+The new edition **bundles no real historical market data**. Opening it makes no default OKX request and does not automatically display prices, backtests, current directions, or the calendar. Eligible users read the notices, make their own declarations, and press “连接并读取公开行情” (connect and read public prices). Successful loading reveals charts and the model calendar. Backtest results additionally require pressing “运行回测” (run backtest); they are not calculated automatically.
 
-Python, Node.js, Git, registration, and exchange API keys are unnecessary. See the [quick start](docs/QUICKSTART.en.md) for instructions.
+“Unauthenticated” describes the endpoint's technical authentication requirement. It does not establish permission for unrestricted data use. The connection does not log in to an account, read positions, or place orders.
 
-![The same public application on a phone-sized screen](docs/images/06-phone.png)
+## Connection and session data
 
-On a phone, scroll down to the charts, backtest, and five-year calendar. Wide tables can be scrolled sideways. Use landscape orientation or a shorter chart range if labels are crowded. The mobile view is the same browser application; no native app installation is required.
+- Your browser sends read-only GET requests directly to an official OKX domain. The project provides no forwarding proxy or account-credential collection.
+- Prices and current calculations remain in page memory. Refreshing or clearing discards them; they are not supplied in the repository or ZIP.
+- Loading is user-initiated, without continuous automatic refresh. Read the actual returned range, count, and cutoff displayed for the current session.
+- Requested history can be 90 days, 1 year, or 3 years; the default is 1 year. This is a request target, not guaranteed coverage. Select your applicable official service region, without switching regions to bypass restrictions.
+- Network failures, regional restrictions, CORS, or other connection errors stop loading. No proxy or circumvention method is provided.
+- The extracted package opens locally for its interface and documentation. Acquiring real prices still requires a network connection; it is no longer a bundled-data offline research edition.
 
-## Contents and data
+![No data connection without a region declaration or when a restricted region is declared](docs/images/02-restricted.png)
 
-- A direction calendar showing current and upcoming phases generated by the time rules.
-- Historical ETH prices and the original formula's bias signals; future sections contain signals only.
-- Two separate analysis methods: a direction-calendar baseline and fixed-holding-period bias statistics.
-- The public edition contains the calendar and backtests only. It has no live positions, order controls, private trading records, or account connections.
+Free access and an entertainment label do not waive applicable rules. Check your eligibility and the [use boundaries](docs/RISK_NOTICE.md) before connecting. This project does not claim OKX data-redistribution permission.
 
-On first load, the backtest covers the full history from 2019-12-25, rather than a recent subset. The chart's “图1 / 日线范围” (chart 1 / daily range) and “图2范围” (chart 2 range) control the display only. To change the research period, use the backtest's start and end dates and click “运行回测” (run backtest). The end date includes that entire Beijing calendar day, subject to the available snapshot.
+## What becomes available after connection
 
-Prices are a static snapshot from the original project page: `ETH-USDT-SWAP`, 29,473 two-hour candles, covering 2019-12-25 through 2026-09-15. The original page identifies OKX as the source. Individual candles have not been independently verified for this release. The snapshot does not update automatically and must not be treated as live market data. See the [data notes](docs/DATA.md) for time zones, complete daily candles, and validation scope.
+| Feature | Meaning |
+| --- | --- |
+| Original signals and price charts | Time-formula signals over the current session's prices. Future signals contain no future market prices. |
+| Direction-calendar midpoint baseline | Red high-band midpoints select hypothetical inverse (original short) and green deep-band midpoints hypothetical positive (original long). Entry and exit use closes of the aligned 2H candles. |
+| Original bias with fixed holding periods | Bias above +0.1 selects hypothetical long and below −0.1 hypothetical short; compare later closes at fixed horizons. |
+| Direction calendar | Original time-rule phases, displayed only after successful connection. Direction labels are entertainment-research outputs, not investment instructions. |
 
-## The two analysis methods
+The original time algorithm is retained, including its 23:00 day boundary and unreachable j = 10 branch. Its validity has not been established. The two backtests remain separate. Neither simulates actual execution, funding, leverage, margin, or liquidation. Closing prices alone cannot establish intraperiod maximum adverse excursion (MAE).
 
-| Method | Entry and exit | Interpretation |
-| --- | --- | --- |
-| Direction-calendar midpoint baseline (方向日历 · 中点切换基准) | A red high-band midpoint switches to short; a green deep-band midpoint switches to long. Enter at the close of the first 2-hour candle whose opening is at or after the midpoint. Exit at the close associated with the next opposite event. | Each completed position is one research trade. The unfinished final segment is marked to the cutoff snapshot and excluded from completed-sample statistics. Positions from before the selected range are not carried in. |
-| Original bias with fixed holding periods (原 Bias · 固定持有统计) | Calculate bias at each 2-hour candle's opening. Bias above `+0.1` means long; below `−0.1` means short. Compare that candle's close with the close 2, 6, 12, 24, 72, or 168 hours later. | Describes signal performance over a fixed horizon. Samples can overlap, so their returns cannot be compounded into a portfolio curve or annualized return. |
+Cost settings affect hypothetical statistics and do not charge you: 5 bps is 0.05% per side and 0.10% for a completed round trip. An unfinished midpoint segment deducts only its hypothetical entry cost. Win rates, means, and medians are not account returns or future-profit guarantees. Fixed-holding samples can overlap and cannot be compounded into an equity curve.
 
-The methods use different direction definitions and must be read separately. In the original bias chart, red means a long bias and green a short bias. The direction calendar applies a different mapping to band-midpoint events.
+### Synthetic illustration in the documentation
 
-### Direction-calendar midpoint example
+![Explicitly synthetic data for documentation, not real OKX prices or actual returns](docs/images/03-entertainment-demo.png)
 
-![Direction-calendar midpoint backtest covering the full history, with a cost of 5 bps per side](docs/images/03-midpoint-backtest.png)
+**This result image uses clearly labelled synthetic data solely to explain the interface and hypothetical statistics.** It does not represent real markets, bundled prices, or predictive ability. The public application does not automatically load this synthetic demonstration. Users must still establish their own eligibility and actively connect.
 
-This screenshot uses the full historical range and **5 bps per side as an example**. “已完成样本” counts completed segments; “扣成本胜率” is the share of completed segments with positive return after the entered costs. “单样本平均” and “单样本中位数” describe a single segment, not total account profit. The table lists each segment's entry, exit or mark, prices, gross return, and return after incurred costs. A row labelled “未完成 · 快照估值” is unfinished: its last available price is a historical mark, and it is excluded from the completed-sample statistics.
+## Everyday use
 
-### Original bias with fixed holding periods
+1. Open the page and read the purpose, region, and data notices.
+2. Only if eligible, select “使用地区” (use location), “适用的 OKX 官方服务区域” (applicable official service region), and “请求历史范围” (requested history). Personally confirm the notice, then press “连接并读取公开行情”. Enter no passwords, accounts, or keys.
+3. After success, check coverage, set chart ranges, dates, and hypothetical costs, then press “运行回测”.
+4. Press “取消 / 清除本次数据” (cancel / clear this session) or refresh when finished.
 
-![Original bias statistics for the full history, with a cost of 5 bps per side](docs/images/04-bias-backtest.png)
+Computers, phones, and tablets use the browser. Python, Node.js, and Git are unnecessary. Extract the whole ZIP before opening index.html. The interface and documentation can be read locally; real data require online access. Add to Home Screen is a shortcut, without guaranteed offline availability. See the [English guide](docs/QUICKSTART.en.md) and [Chinese guide](docs/QUICKSTART.zh-CN.md). The interface is mainly Chinese.
 
-Select “原 Bias · 固定持有统计” under “回测口径” (analysis method), then click “运行回测”. Each holding period has separate “合计” (combined), “多” (long), and “空” (short) rows. “平均毛收益” is the average before the entered costs; “扣成本平均” and “扣成本中位数” are after them. Sample counts and results for different holding periods answer separate questions and should not be added together. The pictured 5 bps setting is illustrative, not a verified trading cost.
+## Copyright and version scope
 
-The cost input, labelled “单边成本（bps）”, is **combined fees and slippage per side, in basis points**. One bps is 0.01%. The default of zero reproduces the original gross-return statistics. Each completed trade deducts twice the per-side cost: for example, 5 bps per side means 10 bps for a round trip. An unfinished midpoint position deducts only the entry-side cost already incurred. Funding, leverage, margin, and liquidations are not modeled. Samples with unverified entry or exit prices caused by data gaps are skipped; fixed-holding statistics also skip holding windows containing gaps. Read the skipped counts alongside the results.
+Copyright © 2026 biaogebaofu. **All rights reserved. Public source is available for viewing, without an open-source license.**
 
-The snapshot retains timestamps and closing prices only, so intraperiod maximum adverse excursion (MAE) is unavailable. Means, medians, and win rates describe individual segments or samples, not an account equity curve.
+The [LICENSE](LICENSE) permits personal, noncommercial use of the official website and unmodified official packages. It does not replace OKX's data conditions. Adapting, redistributing, or commercially using the project's original source requires separate written permission. GitHub's platform viewing and forking rights remain applicable. [Third-party components](THIRD_PARTY_NOTICES.md) retain their own licenses.
 
-The “五年日历” (five-year calendar) covers 2026-09-15 through 2031-09-15, with an inclusive start and exclusive end. Its first row continues an earlier phase; neither the table's start nor its cutoff creates a new switch. See the [illustrated quick start](docs/QUICKSTART.en.md) for chart controls, calendar columns, phone use, and the actual offline folder structure.
-
-## Rules and limitations
-
-- The original time formula is retained, including its 23:00 day boundary and unreachable `j = 10` branch, to make the source behavior traceable. These details do not establish model validity.
-- Rule-based calendars can extend into the future; actual prices stop at the snapshot's final date.
-- Historical statistics do not establish future profitability. This is research and visualization software, without investment advice or automated trading.
-- The interface is mainly Chinese, with bilingual titles and documentation. It is not a fully translated English interface.
-
-## Copyright
-
-Copyright © 2026 biaogebaofu. **All rights reserved. Source code is public for viewing; no open-source license is granted.**
-
-You may access the official website and run unmodified official offline packages for personal, noncommercial research. Adapting, redistributing, or commercially using the project's original source requires separate written permission. This notice does not exclude viewing and forking rights provided by GitHub's platform terms; a fork does not grant broader adaptation, redistribution, or commercial-use permission. See [LICENSE](LICENSE) and [GitHub's licensing documentation](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository).
-
-Third-party components, including ECharts and zrender, and market data retain their respective rights and licensing conditions. This project's notice does not restrict rights granted by third-party licenses. See [third-party notices](THIRD_PARTY_NOTICES.md) for the component details.
+These statements describe the current v0.2.0 application and package. They do not establish that older commits, screenshots, or releases have been removed from GitHub history; those require a separate audit and action.

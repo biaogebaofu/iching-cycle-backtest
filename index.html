@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark">
-  <meta name="description" content="易经周期日历与历史回测研究工具。无需账号和安装，支持电脑、手机和平板。I Ching Cycle Calendar & Backtest.">
+  <meta name="description" content="仅供娱乐与模型研究。面向中国大陆以外且当地法律与平台条款允许的用户；主动连接公开行情后计算。Entertainment only.">
   <meta name="author" content="biaogebaofu">
   <title>易经周期日历与回测 | I Ching Cycle Calendar &amp; Backtest</title>
   <link rel="stylesheet" href="assets/style.css">
   <script defer src="assets/vendor/echarts.min.js"></script>
-  <script defer src="assets/history.js"></script>
+  <script defer src="assets/market-data.js"></script>
   <script defer src="assets/core.js"></script>
   <script defer src="assets/app.js"></script>
 </head>
@@ -17,24 +17,38 @@
   <a class="skip" href="#main">跳到内容</a>
   <main class="page" id="main">
     <header class="masthead">
-      <div><p class="eyebrow">ETH · 时间规则研究 / TIME CYCLE RESEARCH</p><h1>易经周期日历与回测</h1><p class="english">I Ching Cycle Calendar &amp; Backtest</p></div>
+      <div><p class="eyebrow">纯属娱乐 · ENTERTAINMENT ONLY</p><h1>易经周期日历与回测</h1><p class="english">I Ching Cycle Calendar &amp; Backtest</p></div>
       <div class="clock">北京时间 · UTC+08:00<time id="clock">—</time><span>按设备时钟计算</span></div>
     </header>
-    <nav aria-label="页面导航"><a href="#signals">历史图表</a><a href="#backtest">回测研究</a><a href="#calendar">五年日历</a><a href="#help">使用说明</a></nav>
-    <p class="notice">实验性时间模型：日期可计算，涨跌未获证明。历史回测不能保证未来表现。本页仅供研究。</p>
+    <nav aria-label="页面导航"><a href="#connection">连接公开行情</a><a href="#signals">历史图表</a><a href="#backtest">回测研究</a><a href="#calendar">五年日历</a><a href="#help">使用说明</a></nav>
+    <p class="notice"><strong>纯属娱乐与模型研究 / Entertainment and model research only.</strong><br>不用于投资决策，不提供投资建议、价格预测或收益承诺。面向中国大陆以外且所在地法律、OKX 条款允许的用户。免费和娱乐声明不能免除法律或平台责任。</p>
+    <section id="connection" class="panel" aria-labelledby="connectionTitle">
+      <p class="eyebrow">START HERE / 从这里开始</p><h2 id="connectionTitle">主动连接 OKX 公开行情</h2>
+      <p class="caption">不填 API Key、密码或个人账户信息。默认不连接 OKX，也不展示行情、模型日历和回测。连接后只在本页内存中计算，刷新或清除即丢弃。</p>
+      <div class="controls connection-controls">
+        <label>使用地区<select id="jurisdiction"><option value="">请选择</option><option value="eligible">中国大陆以外，且已确认当地和平台允许</option><option value="mainland">中国大陆</option><option value="restricted">其他受限地区 / 尚未确认</option></select></label>
+        <label>适用的 OKX 官方服务区域<select id="apiRegion"><option value="https://openapi.okx.com">全球服务 · openapi.okx.com</option><option value="https://us.okx.com">美国 / 澳大利亚 · us.okx.com</option><option value="https://eea.okx.com">欧洲经济区 · eea.okx.com</option></select></label>
+        <label>请求历史范围<select id="historyDays"><option value="90">最近 90 天</option><option value="365" selected>最近 1 年</option><option value="1095">最近 3 年</option></select></label>
+      </div>
+      <label class="ack"><input id="eligibilityAck" type="checkbox">我已阅读用途与风险说明，并自行确认所在地及对应 OKX 服务允许访问此数据。连接会向所选 OKX 官方域名发送网络请求及 IP 等网络信息。</label>
+      <p class="caption">地区选择是自我声明，并非 IP 地理封锁或法律许可认证。不同地区未必提供 ETH-USDT-SWAP；不可改选地区来规避限制。请先阅读 <a href="docs/risk.html">用途与地区限制</a>、<a href="https://www.okx.com/help/okx-api-agreement" target="_blank" rel="noopener noreferrer">OKX API 协议</a>及<a href="https://www.okx.com/help/terms-of-service" target="_blank" rel="noopener noreferrer">服务条款</a>。</p>
+      <div class="controls"><button id="connectMarket" class="primary" type="button" disabled>连接并读取公开行情</button><button id="clearMarket" type="button" disabled>取消 / 清除本次数据</button></div>
+      <p id="connectionStatus" role="status" aria-live="polite">尚未连接。请先确认适用地区与用途说明。</p>
+    </section>
+    <div id="researchOutput" hidden>
     <section class="hero" aria-label="日历当前与下一阶段">
       <article id="currentCard" class="phase-card"><p class="card-label">当前日历阶段</p><h2 id="currentDirection">正在计算</h2><p id="currentUntil">—</p><p class="muted" id="currentOrigin">—</p></article>
       <article id="nextCard" class="phase-card next"><p class="card-label">下一阶段</p><h2 id="nextDirection">—</h2><p id="nextStart">—</p><p class="muted" id="nextEnd">—</p></article>
     </section>
-    <p class="caption">“只多 / 只空”是原模型的方向标签，始终允许空仓。日历与下方原信号图的红绿含义不同。</p>
+    <p class="caption">以下正向 / 反向均为假设模型标签，不是操作指令。日历与原信号图的红绿含义不同；日期规则可计算，不代表未来走势有效。</p>
     <section id="signals" aria-labelledby="signalTitle">
-      <div class="section-top"><div><p class="eyebrow">01 / HISTORICAL SIGNALS</p><h2 id="signalTitle">原公式信号与历史价格</h2></div><span class="badge">历史快照 · 无实时行情</span></div>
-      <p id="historyMeta" class="muted">正在读取本地历史快照</p>
+      <div class="section-top"><div><p class="eyebrow">01 / HISTORICAL SIGNALS</p><h2 id="signalTitle">原公式信号与历史价格</h2></div><span class="badge">本次主动读取 · 不自动更新</span></div>
+      <p id="historyMeta" class="muted">等待主动读取公开行情</p>
       <p class="caption">图中红色偏多、绿色偏空。未来区域只展示时间公式信号，价格留空。</p>
       <div class="controls">
         <label>图1 / 日线范围<select id="range1"><option value="all">全部历史</option><option value="365" selected>最近1年</option><option value="180">最近半年</option><option value="90">最近3个月</option></select></label>
         <label>图2范围<select id="range2"><option value="90">最近3个月</option><option value="30" selected>最近1个月</option><option value="14">最近2周</option></select></label>
-        <label>未来信号<select id="predDays"><option value="0">不展示</option><option value="30">30天</option><option value="365" selected>1年</option><option value="1095">3年</option><option value="1825">5年</option></select></label>
+        <label>未来信号<select id="predDays"><option value="0" selected>不展示</option><option value="30">30天</option><option value="365">1年</option><option value="1095">3年</option><option value="1825">5年</option></select></label>
         <button id="redrawCharts" type="button">重绘图表</button>
       </div>
       <article class="panel"><h3>图1 · 2H 信号曲线与 ETH 价格</h3><div id="chart1" class="chart overview" role="img" aria-label="2小时原公式信号与ETH历史价格，可缩放"></div></article>
@@ -46,8 +60,8 @@
       <div class="panel">
         <div class="controls backtest-controls">
           <label>回测口径<select id="testMode"><option value="midpoint">方向日历 · 中点切换基准</option><option value="bias">原 Bias · 固定持有统计</option></select></label>
-          <label>起始日期（北京时间）<input type="date" id="startDate" value="2019-12-25"></label>
-          <label>结束日期（含）<input type="date" id="endDate" value="2026-09-15"></label>
+          <label>起始日期（北京时间）<input type="date" id="startDate" ></label>
+          <label>结束日期（含）<input type="date" id="endDate" ></label>
           <label>单边成本（bps）<input type="number" id="costBps" min="0" max="1000" step="0.5" value="0" inputmode="decimal"></label>
           <button id="runBacktest" type="button" class="primary">运行回测</button>
         </div>
@@ -60,17 +74,18 @@
       </div>
     </section>
     <section id="calendar" aria-labelledby="calendarTitle">
-      <div class="section-top"><div><p class="eyebrow">03 / DIRECTION CALENDAR</p><h2 id="calendarTitle">五年方向日历</h2></div><span class="badge">原规则 · UTC+8</span></div>
-      <div class="panel"><p class="muted">2026-09-15 至 2031-09-15 · 起点包含，终点不包含</p><div id="timeline" class="timeline" aria-label="五年日历阶段概览"></div><div class="table-scroll" tabindex="0" role="region" aria-label="方向日历，可左右滚动"><table><thead><tr><th>生效时间（含）</th><th>结束时间（不含）</th><th>日历方向</th><th>色带时间中点</th></tr></thead><tbody id="scheduleRows"></tbody></table></div><p class="caption">第一段延续此前方向；表格截止日期不触发切换。日历红高带中点 → 只空，绿深带中点 → 只多。</p></div>
+      <div class="section-top"><div><p class="eyebrow">03 / DIRECTION CALENDAR</p><h2 id="calendarTitle">五年模型日历</h2></div><span class="badge">原规则 · UTC+8</span></div>
+      <div class="panel"><p class="muted">2026-09-15 至 2031-09-15 · 起点包含，终点不包含</p><div id="timeline" class="timeline" aria-label="五年日历阶段概览"></div><div class="table-scroll" tabindex="0" role="region" aria-label="方向日历，可左右滚动"><table><thead><tr><th>生效时间（含）</th><th>结束时间（不含）</th><th>日历方向</th><th>色带时间中点</th></tr></thead><tbody id="scheduleRows"></tbody></table></div><p class="caption">第一段延续此前方向；表格截止日期不触发切换。日历红高带中点 → 假设反向，绿深带中点 → 假设正向；仅用于解释固定规则。</p></div>
     </section>
+    </div>
     <section id="help" aria-labelledby="helpTitle">
       <div class="section-top"><div><p class="eyebrow">04 / GETTING STARTED</p><h2 id="helpTitle">使用与计算说明</h2></div></div>
       <div class="help-grid">
-        <article class="panel"><h3>不用懂程序，也能使用</h3><ol><li>打开网页，先看当前阶段和数据截止日期。</li><li>选择回测口径、日期与成本，点“运行回测”。</li><li>图表下方可拖动缩放；表格可左右滑动。</li></ol><p class="caption">电脑离线：<a href="https://github.com/biaogebaofu/iching-cycle-backtest/releases/latest">下载官方离线包</a>，全部解压后双击 index.html。手机 / 平板：打开网页，可收藏或添加到主屏幕作为快捷入口。</p><a href="docs/guide.html">中文图文使用指南（7 张图）</a> · <a href="docs/guide.en.html">English illustrated guide</a></article>
-        <article class="panel"><h3>规则保持原项目口径</h3><p>图表使用原 Bias 公式，门槛 ±0.1。日历合并连续红高带 / 绿深带，取时间中点，向上对齐到 2H K 线开始，再于该根收盘生效。</p><p class="caption">保留原月序 j = 10 不可达及原 23 时日界逻辑；它是固定日期模型，未经真实节气历法校准。</p><p class="caption">历史行情截至 2026-09-15 10:00（北京时间），不自动更新；未来信号不含未来价格。日期按照设备时钟换算北京时间，请保持时钟准确。</p><a href="docs/DATA.md">数据说明</a> · <a href="PRIVACY.md">隐私说明</a></article>
+        <article class="panel"><h3>不用懂程序，也能使用</h3><ol><li>先阅读娱乐用途和地区限制，选择适用地区及官方服务区域。</li><li>勾选已读说明，点“连接并读取公开行情”；无需密钥。</li><li>选择回测口径、日期与成本，点“运行回测”。</li><li>图表下方可拖动缩放；表格可左右滑动。</li></ol><p class="caption">电脑本地使用（读取行情仍需联网）：<a href="https://github.com/biaogebaofu/iching-cycle-backtest/releases/latest">下载官方本地包</a>，全部解压后双击 index.html。手机 / 平板：打开网页，可收藏或添加到主屏幕作为快捷入口。</p><a href="docs/guide.html">中文图文使用指南</a> · <a href="docs/guide.en.html">English illustrated guide</a></article>
+        <article class="panel"><h3>规则保持原项目口径</h3><p>图表使用原 Bias 公式，门槛 ±0.1。日历合并连续红高带 / 绿深带，取时间中点，向上对齐到 2H K 线开始，再于该根收盘生效。</p><p class="caption">保留原月序 j = 10 不可达及原 23 时日界逻辑；它是固定日期模型，未经真实节气历法校准。</p><p class="caption">行情范围取决于本次成功取得的已收盘数据，不内置历史快照，不自动刷新；未来区域只显示公式值。日期按照设备时钟换算北京时间，请保持时钟准确。</p><a href="docs/DATA.md">数据说明</a> · <a href="PRIVACY.md">隐私说明</a></article>
       </div>
     </section>
-    <footer><p>© 2026 biaogebaofu · 保留所有权利 / All rights reserved · v0.1.1</p><p>源码仅供查看；个人研究可使用官方网页和未修改的官方离线包。<a href="LICENSE">版权条件</a> · <a href="THIRD_PARTY_NOTICES.md">第三方许可</a> · <a href="https://github.com/biaogebaofu/iching-cycle-backtest" target="_blank" rel="noopener noreferrer">GitHub</a></p></footer>
+    <footer><p>© 2026 biaogebaofu · 保留所有权利 / All rights reserved · v0.2.0</p><p>源码仅供查看；个人研究可使用官方网页和未修改的官方本地包。<a href="LICENSE">版权条件</a> · <a href="THIRD_PARTY_NOTICES.md">第三方许可</a> · <a href="https://github.com/biaogebaofu/iching-cycle-backtest" target="_blank" rel="noopener noreferrer">GitHub</a></p></footer>
     <p id="fatalError" class="warning" role="alert" hidden></p>
     <noscript>请开启浏览器 JavaScript 后使用日历与回测。</noscript>
   </main>
