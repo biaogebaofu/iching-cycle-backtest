@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="610" viewBox="0 0 920 610">
+<rect width="920" height="610" rx="16" fill="#141d29"/>
+<g fill="#e5edf6" font-family="Segoe UI,Microsoft YaHei,sans-serif">
+<text x="44" y="54" font-size="28" font-weight="700">电脑离线使用 / Offline desktop use</text>
+<text x="44" y="96" font-size="22" fill="#8ebaff">下载 ZIP → 完整解压 → 双击 index.html</text>
+<text x="44" y="129" font-size="18" fill="#a8b9cc">Download ZIP → Extract everything → Open index.html</text>
+</g>
+<g fill="#e5edf6" font-family="Consolas,Microsoft YaHei,monospace" font-size="19"><text x="44" y="190">iching-cycle-backtest/</text>
+<text x="44" y="221">├── index.html   ← 双击打开 / Open this file</text>
+<text x="44" y="252">├── assets/      ← 图表、规则与历史数据 / App resources</text>
+<text x="44" y="283">│   ├── app.js, core.js, history.js, style.css</text>
+<text x="44" y="314">│   └── vendor/</text>
+<text x="44" y="345">├── docs/        ← 图文教程 / Illustrated guides</text>
+<text x="44" y="376">│   ├── guide.html, guide.en.html</text>
+<text x="44" y="407">│   └── images/</text>
+<text x="44" y="438">├── tests/       ← 仅供代码核对 / Optional code checks</text>
+<text x="44" y="469">├── README.md, README.en.md</text>
+<text x="44" y="500">└── LICENSE      ← 保留版权 / Copyright terms</text></g>
+<g fill="#a8b9cc" font-family="Segoe UI,Microsoft YaHei,sans-serif" font-size="17">
+<text x="44" y="556">保留完整文件夹；不要只提取 index.html。无需安装编程工具。</text>
+<text x="44" y="584">按官方包目录生成的结构示意 / Diagram based on the official package</text>
+</g></svg>
