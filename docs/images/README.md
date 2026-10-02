@@ -1,10 +1,9 @@
-# 使用图片 / Usage images
+# Documentation images / 说明图片
 
-01–06 为官方网页的真实界面截图；03–04 使用全部历史与单边 5 bps 成本示例。
-07 为按官方离线包目录生成的结构示意，不是操作系统文件管理器截图。
+These screenshots document v0.2.0 of the interface.
 
-Images 01–06 show the actual public app. Backtest examples use the full history
-and 5 bps per side. Image 07 illustrates the official offline folder structure.
+- `01-start.png`: default empty state; no OKX request or result shown.
+- `02-restricted.png`: mainland China selection; connection unavailable.
+- `03-entertainment-demo.png`: a private test fixture running the same interface with locally generated artificial prices. The orange banner identifies it as **synthetic data, not real market data**. No request to OKX was made for this image. The generator is not bundled with the public application.
 
-价格快照截至 2026-09-15 10:00（北京时间）。图片拍摄于 2026-10-02，
-当前阶段按截图时的设备时钟计算，之后可能改变。版权条件见 ../../LICENSE。
+第三张仅为人工数据操作演示，不是真实行情、实际收益或盈利证据。图像不含个人账户界面、密钥或文件路径。版权遵循项目 LICENSE。

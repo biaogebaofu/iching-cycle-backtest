@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="author" content="biaogebaofu">
+<title>v0.2.0 用途与使用边界 · Purpose and use boundaries | I Ching Cycle Calendar &amp; Backtest</title>
+<style>
+:root{color-scheme:dark;--bg:#0b1017;--panel:#141d29;--text:#e5edf6;--muted:#a8b9cc;--line:#334254;--link:#8ebaff}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.8 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",sans-serif}
+a{color:var(--link);text-underline-offset:3px;overflow-wrap:anywhere}a:hover{color:#bfd6ff}a:focus-visible,.table-scroll:focus-visible{outline:3px solid #8ebaff;outline-offset:4px}
+.page{max-width:1100px;margin:0 auto;padding:30px 26px 58px}.top-nav{display:flex;gap:12px 24px;flex-wrap:wrap;margin-bottom:25px}.top-nav a{font-weight:600}
+.masthead{border-bottom:1px solid var(--line);padding-bottom:22px;margin-bottom:30px}.eyebrow{margin:0 0 8px;color:var(--muted);font-size:.78rem;letter-spacing:.1em}.masthead h1{margin:0;font-size:clamp(1.6rem,4.8vw,2.35rem);line-height:1.4}.subtitle{margin:10px 0 0;color:var(--muted)}
+article h2{margin:46px 0 16px;padding-top:18px;border-top:1px solid var(--line);font-size:1.45rem;line-height:1.45}article h3{margin:30px 0 12px;font-size:1.16rem}p{margin:15px 0}li{margin:8px 0}ul,ol{padding-left:1.6rem}strong{color:#f0f5fd}
+img{display:block;max-width:100%;height:auto;margin:24px auto;border:1px solid var(--line);border-radius:10px;background:var(--panel)}
+.table-scroll{max-width:100%;overflow-x:auto;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;margin:22px 0;border:1px solid var(--line);border-radius:10px}table{border-collapse:collapse;width:100%;min-width:600px;font-size:.94rem}th,td{padding:13px 15px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}th{background:var(--panel);font-weight:650}tbody tr:last-child td{border-bottom:0}
+code{font: .9em ui-monospace,SFMono-Regular,Consolas,monospace;background:#1e2b3b;padding:2px 6px;border-radius:4px;overflow-wrap:anywhere}pre{white-space:pre;overflow-x:auto;font:14px/1.75 ui-monospace,SFMono-Regular,Consolas,"Microsoft YaHei",monospace;background:#0b121c;border:1px solid var(--line);border-radius:9px;padding:20px;margin:16px 0}
+footer{border-top:1px solid var(--line);margin-top:44px;padding-top:18px;color:var(--muted);font-size:.87rem}
+@media(max-width:600px){body{font-size:15px}.page{padding:20px 15px 40px}.top-nav{gap:9px 18px}article h2{font-size:1.25rem;margin-top:34px}img{margin:18px auto;border-radius:7px}pre{padding:14px;font-size:12px}th,td{padding:11px 12px}}
+</style>
+</head>
+<body>
+<main class="page">
+<nav class="top-nav" aria-label="指南导航"><a href="../index.html">← 返回应用 / Application</a><a href="guide.html" lang="zh-CN">中文指南</a><a href="guide.en.html" lang="en">English guide</a></nav>
+<header class="masthead"><p class="eyebrow">I CHING CYCLE CALENDAR &amp; BACKTEST / 易经周期日历与回测</p><h1>v0.2.0 用途与使用边界 · Purpose and use boundaries</h1><p class="subtitle">纯属娱乐与模型研究，不用于投资决策。Entertainment and model research only; not for investment decisions.</p></header>
+<article><h2>中文</h2>
+<p><strong>纯属娱乐与模型研究，不用于投资决策。免费，无返佣。</strong></p>
+<p>方向日历与所谓收益均为固定时间模型的假设统计，不是实际交易、投资建议、未来价格预测或盈利保证。模型有效性未经证明；费用、样本重叠、缺口和未完成段会影响统计，资金费与杠杆风险未被模拟。</p>
+<p>数据连接面向符合所在地规定和 OKX 条件的中国大陆以外使用者；中国大陆与其他受限地区不可使用。页面的地区与用途选项只是自声明，不是 IP 封锁、法律认证或 OKX 授权。必须由用户本人判断资格并主动操作；连接可达不证明获得使用许可。</p>
+<h3>官方数据条件</h3>
+<p><a href="https://www.okx.com/help/okx-api-agreement">OKX API 协议</a>第 9.3、9.4 节限制向第三方提供 API 服务及行情再分发、展示；免密公开端点同样适用。未经所需书面许可，不应公开分享行情或带真实行情的截图。另请阅读 <a href="https://www.okx.com/help/terms-of-service">OKX 服务条款</a>。</p>
+<p>免费与娱乐标签不豁免适用法律或 OKX 数据条件。项目没有宣称获得 OKX 再分发授权，浏览器直连也不构成此类授权。条件不明或受到限制时应停止，不用代理规避。</p>
+<p>默认不请求行情、不展示方向；主动连接成功后显示图表和模型日历，回测须另点“运行回测”。连接只读 GET、内存处理，刷新或“取消 / 清除本次数据”即丢弃，不下单、不代理转发、不持续自动刷新。不可改选官方服务区域规避限制。文档合成结果图仅为说明界面的演示，不是授权依据或真实市场结果。</p>
+<p>本说明针对当前应用与包，不表示旧提交、旧截图或旧发布包已删除。</p>
+<h2>English</h2>
+<p><strong>For entertainment and model research only. Do not use it for investment decisions. Free, without referral commissions.</strong></p>
+<p>Directions and returns are hypothetical outputs of a fixed time model, not executions, advice, price forecasts, or profit guarantees. Model validity is unproven. Costs, overlapping samples, gaps, and unfinished segments affect the statistics; funding and leverage risks are not simulated.</p>
+<p>Connection is for independently eligible users outside mainland China and other restricted locations. Region and purpose options are self-declarations, not IP blocking, legal certification, or OKX approval. Users must determine eligibility and actively connect themselves. Technical access establishes no permission.</p>
+<h3>Official data conditions</h3>
+<p>Sections 9.3 and 9.4 of the <a href="https://www.okx.com/help/okx-api-agreement">OKX API Agreement</a> restrict third-party API provision and market-data redistribution or display, including unauthenticated public endpoints. Do not publish prices or real-price screenshots without required written permission. Read the <a href="https://www.okx.com/help/terms-of-service">OKX Terms of Service</a> as well.</p>
+<p>Free or entertainment use waives no applicable obligations. The project claims no OKX redistribution approval; direct browser access does not confer it. Stop if restricted or uncertain, without a circumvention proxy.</p>
+<p>Startup makes no market-data request or direction display. Successful loading reveals charts and the model calendar; statistics require a separate “运行回测” action. Read-only GET data remain in page memory, discarded on refresh or “取消 / 清除本次数据”, without orders, forwarding, or continuous refresh. Do not switch service regions to bypass restrictions. Synthetic documentation results merely illustrate the interface.</p>
+<p>This notice covers the current application and package, not confirmed deletion of older commits, screenshots, or releases.</p>
+</article>
+<footer>© 2026 biaogebaofu · 保留所有权利 / All rights reserved · v0.2.0 · <a href="../LICENSE">版权与使用范围</a></footer>
+</main>
+</body>
+</html>
