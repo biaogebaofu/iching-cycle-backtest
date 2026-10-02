@@ -4,7 +4,7 @@
 
 A browser application for viewing the original I Ching time-cycle calendar, signal charts, and historical backtests on computers, tablets, and phones. No programming or trading-account connection is required. The model's validity has not been established. Future rule-based signals are not forecasts of future prices.
 
-**Publication is being prepared.** Planned addresses: [use the website](https://biaogebaofu.github.io/iching-cycle-backtest/) and [view the repository](https://github.com/biaogebaofu/iching-cycle-backtest). These links will become available after publication.
+[Use the website](https://biaogebaofu.github.io/iching-cycle-backtest/) · [View the repository](https://github.com/biaogebaofu/iching-cycle-backtest)
 
 ## For everyday users
 

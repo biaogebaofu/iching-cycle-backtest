@@ -4,7 +4,7 @@
 
 把原有易经时间周期规则整理为可在电脑、平板和手机浏览器中查看的日历、信号图与历史回测。无需编程，无需连接交易账户。模型的有效性尚未证明；时间规则产生的未来信号不是未来价格预测。
 
-**发布准备中。** 计划网页地址：[在线使用](https://biaogebaofu.github.io/iching-cycle-backtest/)；计划仓库地址：[查看代码](https://github.com/biaogebaofu/iching-cycle-backtest)。发布完成后才可访问。
+[在线使用](https://biaogebaofu.github.io/iching-cycle-backtest/) · [查看代码](https://github.com/biaogebaofu/iching-cycle-backtest)
 
 ## 普通用户怎么用
 
