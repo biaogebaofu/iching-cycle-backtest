@@ -1,0 +1,53 @@
+易经周期日历与回测 / I Ching Cycle Calendar & Backtest
+Copyright © 2026 biaogebaofu. All rights reserved. 保留所有权利。
+
+中文
+
+本声明适用于本项目的自有代码与文档，不适用于第三方组件或行情数据。
+自有源码公开供查看，不以 MIT、Apache 或其他开放源码许可授权。
+
+允许访问官方托管网页，并下载、保存和运行未经修改的官方离线包，
+仅用于个人、非商业研究。离线包中的本项目版权声明应予保留。
+除上述有限使用、适用法律允许的使用以及 GitHub 平台条款赋予的权利外，
+未经版权所有者另行书面许可，不得复制、改编、再分发本项目自有源码，
+或将本项目自有代码、文档或软件用于商业用途。
+
+GitHub 公开仓库仍受 GitHub 平台条款约束。该条款允许其他 GitHub 用户
+查看和 fork 仓库。本声明不排除这些平台权利；fork 本身不授予超出
+平台条款的改编、再分发或商业使用许可。
+
+第三方组件（包括 ECharts 和 zrender）依各自许可授权，相关声明应保留。
+行情数据的权利属于其相应权利人；本声明不为该数据授予独占权利。
+任何第三方许可已授予的权利不受本项目版权声明限制。
+
+软件按现状提供，不保证模型有效性、数据完整性、未来收益或适合某个用途。
+本声明不排除适用法律不允许排除的权利或责任。
+
+English
+
+This notice applies to the project's original code and documentation, excluding
+third-party components and market data. Original source is made public for viewing.
+No MIT, Apache, or other open-source license is granted for that original material.
+
+You may access the official hosted website and download, retain, and run unmodified
+official offline packages solely for personal, noncommercial research. Retain this
+project's copyright notice in those packages. Except for that limited permission,
+uses permitted by applicable law, and rights provided by GitHub's platform terms,
+you may not reproduce, adapt, or redistribute the project's original source, or
+use its original code, documentation, or software commercially without separate
+written permission from the copyright holder.
+
+Public repositories remain subject to GitHub's platform terms, which permit other
+GitHub users to view and fork a repository. This notice does not exclude those
+platform rights. Forking does not itself grant adaptation, redistribution, or
+commercial-use rights beyond those platform terms.
+
+Third-party components, including ECharts and zrender, remain governed by their
+respective licenses and notices. Market-data rights remain with their respective
+holders; no exclusive rights in those data are claimed here. Rights granted by
+third-party licenses are not restricted by this project's copyright notice.
+
+The software is provided as is, without guarantees of model validity, data
+completeness, future returns, or fitness for any particular purpose. This notice
+does not exclude rights or liabilities that applicable law does not permit to be
+excluded.
