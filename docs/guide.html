@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="author" content="biaogebaofu">
+<title>图文快速上手 · Illustrated Quick Start | I Ching Cycle Calendar &amp; Backtest</title>
+<style>
+:root{color-scheme:dark;--bg:#0b1017;--panel:#141d29;--text:#e5edf6;--muted:#a8b9cc;--line:#334254;--link:#8ebaff}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.8 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",sans-serif}
+a{color:var(--link);text-underline-offset:3px;overflow-wrap:anywhere}a:hover{color:#bfd6ff}a:focus-visible,.table-scroll:focus-visible{outline:3px solid #8ebaff;outline-offset:4px}
+.page{max-width:1100px;margin:0 auto;padding:30px 26px 58px}.top-nav{display:flex;gap:12px 24px;flex-wrap:wrap;margin-bottom:25px}.top-nav a{font-weight:600}
+.masthead{border-bottom:1px solid var(--line);padding-bottom:22px;margin-bottom:30px}.eyebrow{margin:0 0 8px;color:var(--muted);font-size:.78rem;letter-spacing:.1em}.masthead h1{margin:0;font-size:clamp(1.6rem,4.8vw,2.35rem);line-height:1.4}.subtitle{margin:10px 0 0;color:var(--muted)}
+article h2{margin:46px 0 16px;padding-top:18px;border-top:1px solid var(--line);font-size:1.45rem;line-height:1.45}article h3{margin:30px 0 12px;font-size:1.16rem}p{margin:15px 0}li{margin:8px 0}ul,ol{padding-left:1.6rem}strong{color:#f0f5fd}
+img{display:block;max-width:100%;height:auto;margin:24px auto;border:1px solid var(--line);border-radius:10px;background:var(--panel)}img.phone-image{max-width:min(100%,390px)}
+.table-scroll{max-width:100%;overflow-x:auto;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;margin:22px 0;border:1px solid var(--line);border-radius:10px}table{border-collapse:collapse;width:100%;min-width:600px;font-size:.94rem}th,td{padding:13px 15px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}th{background:var(--panel);font-weight:650}tbody tr:last-child td{border-bottom:0}
+code{font: .9em ui-monospace,SFMono-Regular,Consolas,monospace;background:#1e2b3b;padding:2px 6px;border-radius:4px;overflow-wrap:anywhere}pre{white-space:pre;overflow-x:auto;font:14px/1.75 ui-monospace,SFMono-Regular,Consolas,"Microsoft YaHei",monospace;background:#0b121c;border:1px solid var(--line);border-radius:9px;padding:20px;margin:16px 0}
+.offline-package{padding:24px;background:var(--panel);border:1px solid var(--line);border-radius:12px;margin:25px 0;scroll-margin-top:24px}.offline-package h3{margin:0 0 12px;font-size:1.3rem}.offline-steps{font-weight:650;color:#9bc4ff;letter-spacing:.02em}.offline-note{color:var(--muted);margin-bottom:0;font-size:.94rem}
+footer{border-top:1px solid var(--line);margin-top:44px;padding-top:18px;color:var(--muted);font-size:.87rem}
+@media(max-width:600px){body{font-size:15px}.page{padding:20px 15px 40px}.top-nav{gap:9px 18px}article h2{font-size:1.25rem;margin-top:34px}img{margin:18px auto;border-radius:7px}.offline-package{padding:16px}pre{padding:14px;font-size:12px}th,td{padding:11px 12px}}
+</style>
+</head>
+<body>
+<main class="page">
+<nav class="top-nav" aria-label="指南导航"><a href="../index.html">← 返回应用</a><a href="guide.en.html" lang="en">English guide</a><a href="https://github.com/biaogebaofu/iching-cycle-backtest">GitHub</a></nav>
+<header class="masthead"><p class="eyebrow">I CHING CYCLE CALENDAR &amp; BACKTEST / 易经周期日历与回测</p><h1>图文快速上手 · Illustrated Quick Start</h1><p class="subtitle">不需要懂程序：对照真实界面按钮，按图操作。</p></header>
+<article><p><a href="https://github.com/biaogebaofu/iching-cycle-backtest/blob/main/README.md">返回项目说明</a> · <a href="guide.en.html">English</a> · <a href="https://biaogebaofu.github.io/iching-cycle-backtest/">在线使用</a> · <a href="guide.html">浏览器图文教程</a></p>
+<p>用浏览器即可查看日历和运行回测，不需要注册、连接交易账户或安装编程工具。下面按页面的真实按钮名称操作。回测截图统一使用<strong>全部历史、单边成本 5 bps</strong>，便于复现；网页默认成本是 0。</p>
+<h2>1. 打开网页，先看日期与阶段</h2>
+<p>打开<a href="https://biaogebaofu.github.io/iching-cycle-backtest/">易经周期日历与回测</a>，在顶部查看“当前日历阶段”和“下一阶段”。</p>
+<p><img loading="lazy" decoding="async" src="images/01-overview.png" alt="桌面网页总览：当前日历阶段、下一阶段及历史信号图"></p>
+<ul>
+<li><strong>时间统一为北京时间，UTC+08:00。</strong> 即使你在其他时区，页面里的日历和回测日期也按北京时间显示。当前阶段根据设备时钟换算，请保持设备日期和时间准确。</li>
+<li><strong>“只多 / 只空”是原模型方向标签。</strong> 始终允许空仓，它不是要求你下单。</li>
+<li><strong>真实行情截至 2026-09-15 10:00（北京时间）。</strong> 页面时钟和未来日历会继续推进，但历史行情快照不自动更新。</li>
+</ul>
+<p>数据为 <code>ETH-USDT-SWAP</code> 的 29,473 根 2 小时 K 线，原页面标注来源 OKX，本次未逐根向交易所重新核验。模型有效性尚未证明。详见<a href="https://github.com/biaogebaofu/iching-cycle-backtest/blob/main/docs/DATA.md">数据说明</a>。</p>
+<h2>2. 调整图表，分清价格和信号</h2>
+<p>点顶部“历史图表”，在“原公式信号与历史价格”区域操作。</p>
+<p><img loading="lazy" decoding="async" src="images/02-chart-controls.png" alt="图表控件：图1与日线范围、图2范围、未来信号和展开图表"></p>
+<ol>
+<li>在“图1 / 日线范围”选择“全部历史”“最近1年”“最近半年”或“最近3个月”。</li>
+<li>在“图2范围”选择最近 3 个月、1 个月或 2 周。</li>
+<li>在“未来信号”选择展示时长；想只看历史，可以选“不展示”。</li>
+<li>点“重绘图表”可重新绘制。点击“展开日线与最近 2H 图表”可查看日线和图2。</li>
+<li>拖动图底滑条，缩放想看的区间。手机也可缩小日期范围来减少文字拥挤。</li>
+</ol>
+<p><code>2H</code> 表示 2 小时。图中价格取每根 K 线的收盘值，横轴对应它的开始时间；日线只使用完整北京时间自然日。快照末日之后没有真实价格，未来区域只有时间公式信号。</p>
+<p><strong>红绿含义要分别阅读：</strong></p>
+<div class="table-scroll" tabindex="0" role="region" aria-label="表格，可左右滚动查看全部列"><table>
+<thead>
+<tr>
+<th>区域</th>
+<th>红色</th>
+<th>绿色</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>原 Bias 信号图及固定持有统计</td>
+<td>偏多，Bias 高于 <code>+0.1</code></td>
+<td>偏空，Bias 低于 <code>−0.1</code></td>
+</tr>
+<tr>
+<td>方向日历的带状中点规则</td>
+<td>红高带中点切换为“只空”</td>
+<td>绿深带中点切换为“只多”</td>
+</tr>
+</tbody></table></div>
+<p>图表范围与回测日期是两个独立设置。只改图表显示范围，不会改变回测选定的历史区间。</p>
+<h2>3. 运行“方向日历 · 中点切换基准”</h2>
+<p>点顶部“回测研究”，按以下设置复现图中的操作。</p>
+<ol>
+<li>“回测口径”选择“方向日历 · 中点切换基准”。</li>
+<li>“起始日期（北京时间）”填 <code>2019-12-25</code>；“结束日期（含）”填 <code>2026-09-15</code>。首次打开默认就是这个全部历史区间。</li>
+<li>“单边成本（bps）”填 <code>5</code>。</li>
+<li>点“运行回测”。改日期或成本之后，再点一次即可重算。</li>
+</ol>
+<p><img loading="lazy" decoding="async" src="images/03-midpoint-backtest.png" alt="中点切换基准：全部历史、单边成本5 bps及逐段结果"></p>
+<p>这套回测在红高带中点切换为空、绿深带中点切换为多。中点向上对齐到第一根开始时间不早于它的 2 小时 K 线，以该根收盘价入场，持有到下一相反事件对应的收盘价退出。<strong>选定起始日期之前的持仓不带入。</strong></p>
+<h3>5 bps 是多少成本</h3>
+<p><code>1 bps = 0.01%</code>。输入的是<strong>单边手续费与滑点合计</strong>，5 bps 就是单边 0.05%；完成一次入场和退出，合计扣 10 bps，即 0.10%。5 bps 是教程示例，可以按自己的研究假设调整，不代表真实成交成本。</p>
+<p>网页默认 0 用于复现原毛收益统计，并不代表交易没有成本。结果未计入资金费、杠杆、保证金或强平。</p>
+<h3>先看上方汇总，再看每段结果</h3>
+<div class="table-scroll" tabindex="0" role="region" aria-label="表格，可左右滚动查看全部列"><table>
+<thead>
+<tr>
+<th>页面项目</th>
+<th>怎么理解</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>已完成样本</td>
+<td>已有入场和相反方向退出价格的完整段数。先看数量，少量样本不能说明长期稳定性。</td>
+</tr>
+<tr>
+<td>扣成本胜率</td>
+<td>完成样本中，扣成本后收益<strong>严格大于零</strong>的比例；零收益不算胜利。</td>
+</tr>
+<tr>
+<td>单样本平均</td>
+<td>完成样本扣成本收益的算术平均；少数极端值可能拉高或拉低它。</td>
+</tr>
+<tr>
+<td>单样本中位数</td>
+<td>把完成样本扣成本收益从低到高排序后的中间值，用于观察中间水平。</td>
+</tr>
+<tr>
+<td>毛收益</td>
+<td>该段只按收盘价计算的方向收益，尚未扣手续费与滑点。</td>
+</tr>
+<tr>
+<td>扣已发生成本</td>
+<td>扣掉已发生的成本之后的收益。完整段扣双边成本；未完成段只扣已发生的单边入场成本。</td>
+</tr>
+<tr>
+<td>未完成 · 快照估值</td>
+<td>到所选截止时间尚未完成下一相反事件的退出，只按截止范围内最后可用收盘价估值，<strong>不计入上方完成样本统计</strong>。</td>
+</tr>
+<tr>
+<td>缺失事件跳过</td>
+<td>某次所需的入场或退出 K 线缺失、无法验证价格，该项跳过。它不等于亏损或零收益样本。</td>
+</tr>
+</tbody></table></div>
+<p>这张图使用单边 5 bps 成本：共有 16 段已完成样本，扣成本胜率为 75.00%，单样本平均为 −28.27%，中位数为 25.76%。少数大额亏损会拉低平均值，例如图中一段空头的扣成本线性收益为 −810.01%。这个数字来自价格比值的研究计算，不是对可执行账户亏损或净值的模拟；模型未模拟保证金和强平，因此不能仅凭高胜率判断能够盈利。</p>
+<p>上方指标是每一段的统计，不是账户总收益或资金曲线。快照只保留时间和收盘价，因此无法计算盘中最大不利变动（MAE）。</p>
+<h2>4. 单独查看“原 Bias · 固定持有统计”</h2>
+<p>在同一回测区域把“回测口径”改为“原 Bias · 固定持有统计”。保留全部历史和 5 bps 成本，再点“运行回测”。</p>
+<p><img loading="lazy" decoding="async" src="images/04-bias-backtest.png" alt="原Bias固定持有统计：全部历史、单边成本5 bps及不同持有时长"></p>
+<p>每根 2 小时 K 线开始时计算信号：Bias 高于 <code>+0.1</code> 视为多，低于 <code>−0.1</code> 视为空，中间区间不产生样本。以该根收盘价入场，再比较 2、6、12、24、72 或 168 小时后的收盘价。</p>
+<p>表格中每个持有时长分别列出“合计 / 多 / 空”。例如想研究持有 24 小时的偏空信号，阅读“24 小时 / 空”这一行。</p>
+<ul>
+<li>“样本数”是这一行实际完成、可验证的样本数量。</li>
+<li>“平均毛收益”未扣成本；“扣成本平均”和“扣成本中位数”已经扣双边成本。</li>
+<li>“扣成本胜率”仍然只把扣成本收益严格大于零的样本算作胜利。</li>
+<li>“缺口跳过”统计含数据缺口的持有窗口；缺口窗口不进入结果。只统计区间内已有退出价格的完整样本。</li>
+</ul>
+<p><strong>固定持有样本可能重叠。</strong> 相邻两根 K 线都产生 24 小时信号时，它们的大部分持有时间相同。不能把这些收益相加或累乘成账户收益，也不能把不同持有时长的结果混合成年化收益。它回答的是“信号在固定时间后怎样表现”，与中点切换基准是两种不同口径。</p>
+<h2>5. 查看五年方向日历</h2>
+<p>点顶部“五年日历”，查看时间段概览和下面的表格。</p>
+<p><img loading="lazy" decoding="async" src="images/05-calendar.png" alt="五年方向日历：阶段概览、生效时间和结束时间"></p>
+<p>日历窗口为 2026-09-15 至 2031-09-15，起点包含，终点不包含。“生效时间（含）”表示这一阶段从该时刻开始；到“结束时间（不含）”时不再属于这一段，应读取下一阶段。窗口第一段延续此前方向，表格截止日期本身不触发切换。</p>
+<p>这些日期来自固定时间公式，不包含未来行情，也不证明未来涨跌。日历的红高带中点对应“只空”，绿深带中点对应“只多”，与原 Bias 图的红绿方向含义不同。</p>
+<h2>6. 手机和平板使用</h2>
+<p>在手机或平板浏览器中打开同一<a href="https://biaogebaofu.github.io/iching-cycle-backtest/">在线网页</a>。</p>
+<p><img loading="lazy" decoding="async" src="images/06-phone.png" class="phone-image" alt="手机窄屏页面"></p>
+<p>控件会根据屏幕宽度排列。长表格可以左右滑动；图表较密时，可以横屏查看或选择较短的图表范围。回测按钮和计算口径与电脑相同。</p>
+<p>可以收藏网页，或使用浏览器提供的“添加到主屏幕”作为快捷入口。它不保证离线可用。</p>
+<h2>7. 电脑离线打开</h2>
+<ol>
+<li>打开官方 <a href="https://github.com/biaogebaofu/iching-cycle-backtest/releases">Releases 发布页</a>，下载官方离线 ZIP。</li>
+<li><strong>先完整解压</strong>到一个文件夹。不要在压缩包里面直接打开网页，也不要只取出 <code>index.html</code>。</li>
+<li>在解压后的文件夹中双击 <code>index.html</code>。如果系统询问打开方式，选择 Edge、Chrome、Firefox 或 Safari 等浏览器。</li>
+<li>保留 <code>assets</code> 等资源目录的位置，以后再次双击 <code>index.html</code> 即可使用。打开包内 <code>docs/guide.html</code> 可在浏览器阅读图文教程。</li>
+</ol>
+<section id="offline-files" class="offline-package" aria-label="官方离线包结构">
+<p class="eyebrow">OFFICIAL OFFLINE PACKAGE / 官方离线包</p>
+<h3>完整解压后，双击 index.html</h3>
+<p class="offline-steps">ZIP → 完整解压 → index.html</p>
+<pre>iching-cycle-backtest/
+├── index.html                  ← Open this file / 双击打开
+├── assets/
+│   ├── app.js
+│   ├── core.js
+│   ├── history.js
+│   ├── style.css
+│   └── vendor/
+├── docs/
+│   ├── guide.html
+│   ├── guide.en.html
+│   ├── images/
+│   └── ...
+├── tests/
+├── README.md
+├── README.en.md
+└── LICENSE</pre>
+<p class="offline-note">本图仅为文件结构示意，按实际发布包文件列表整理，不是文件管理器截图。请保留完整目录、资源文件和版权声明。</p>
+</section>
+<p><img loading="lazy" decoding="async" src="images/07-offline-files.svg" alt="官方离线包文件结构示意，根据包内实际文件列表整理"></p>
+<p>图中是<strong>官方离线包文件结构示意</strong>，根据真实文件列表整理，用于说明 <code>index.html</code> 和资源目录的位置。</p>
+<p>Windows 和 macOS 都可使用，无需安装 Python、Node.js 或 Git。完整资源解压后，日历和回测在浏览器本地计算，历史行情从包内快照读取，不需要连接交易账户。离线版也不会自动补充当天行情。</p>
+<h2>常见情况</h2>
+<div class="table-scroll" tabindex="0" role="region" aria-label="表格，可左右滚动查看全部列"><table>
+<thead>
+<tr>
+<th>情况</th>
+<th>怎么处理</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>离线打开后图表空白</td>
+<td>确认 ZIP 已完整解压，<code>assets</code> 等资源文件未移动；重新用浏览器打开 <code>index.html</code>，并允许 JavaScript 运行。</td>
+</tr>
+<tr>
+<td>手机图表文字比较密</td>
+<td>横屏查看，或缩小“图1 / 日线范围”和“图2范围”。</td>
+</tr>
+<tr>
+<td>没有当天行情</td>
+<td>当前为静态历史快照，截止 2026-09-15 10:00（北京时间），不会自动更新。</td>
+</tr>
+<tr>
+<td>改了日期或成本，结果没变化</td>
+<td>点“运行回测”重新计算；图表范围与回测区间互不代替。</td>
+</tr>
+<tr>
+<td>某项显示“—”</td>
+<td>该项可能没有可统计的完成样本；不要把缺失统计理解为零收益。</td>
+</tr>
+<tr>
+<td>看不懂红绿颜色</td>
+<td>原 Bias 图红色偏多、绿色偏空；日历中点规则红高带切空、绿深带切多。分别阅读区域说明。</td>
+</tr>
+<tr>
+<td>想分享给别人</td>
+<td>分享官方网页或仓库链接。源码与离线包的再分发需遵守<a href="../LICENSE">版权声明</a>。</td>
+</tr>
+</tbody></table></div>
+<p>本项目保留版权，源码仅公开供查看。允许个人非商业研究使用官方网页和未经修改的官方离线包；其他使用范围见<a href="../LICENSE">版权声明</a>。历史结果不证明未来可以盈利。报告问题时，请删除截图中的账户、密钥、私人仓位和个人信息。</p>
+</article>
+<footer>© 2026 biaogebaofu · 保留所有权利 / All rights reserved · <a href="../LICENSE">版权与使用范围</a></footer>
+</main>
+</body>
+</html>
