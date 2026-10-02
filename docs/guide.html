@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="author" content="biaogebaofu">
+<title>v0.2.0 图文快速上手 · Illustrated Quick Start | I Ching Cycle Calendar &amp; Backtest</title>
+<style>
+:root{color-scheme:dark;--bg:#0b1017;--panel:#141d29;--text:#e5edf6;--muted:#a8b9cc;--line:#334254;--link:#8ebaff}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.8 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",sans-serif}
+a{color:var(--link);text-underline-offset:3px;overflow-wrap:anywhere}a:hover{color:#bfd6ff}a:focus-visible,.table-scroll:focus-visible{outline:3px solid #8ebaff;outline-offset:4px}
+.page{max-width:1100px;margin:0 auto;padding:30px 26px 58px}.top-nav{display:flex;gap:12px 24px;flex-wrap:wrap;margin-bottom:25px}.top-nav a{font-weight:600}
+.masthead{border-bottom:1px solid var(--line);padding-bottom:22px;margin-bottom:30px}.eyebrow{margin:0 0 8px;color:var(--muted);font-size:.78rem;letter-spacing:.1em}.masthead h1{margin:0;font-size:clamp(1.6rem,4.8vw,2.35rem);line-height:1.4}.subtitle{margin:10px 0 0;color:var(--muted)}
+article h2{margin:46px 0 16px;padding-top:18px;border-top:1px solid var(--line);font-size:1.45rem;line-height:1.45}article h3{margin:30px 0 12px;font-size:1.16rem}p{margin:15px 0}li{margin:8px 0}ul,ol{padding-left:1.6rem}strong{color:#f0f5fd}
+img{display:block;max-width:100%;height:auto;margin:24px auto;border:1px solid var(--line);border-radius:10px;background:var(--panel)}
+.table-scroll{max-width:100%;overflow-x:auto;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;margin:22px 0;border:1px solid var(--line);border-radius:10px}table{border-collapse:collapse;width:100%;min-width:600px;font-size:.94rem}th,td{padding:13px 15px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}th{background:var(--panel);font-weight:650}tbody tr:last-child td{border-bottom:0}
+code{font: .9em ui-monospace,SFMono-Regular,Consolas,monospace;background:#1e2b3b;padding:2px 6px;border-radius:4px;overflow-wrap:anywhere}pre{white-space:pre;overflow-x:auto;font:14px/1.75 ui-monospace,SFMono-Regular,Consolas,"Microsoft YaHei",monospace;background:#0b121c;border:1px solid var(--line);border-radius:9px;padding:20px;margin:16px 0}
+footer{border-top:1px solid var(--line);margin-top:44px;padding-top:18px;color:var(--muted);font-size:.87rem}
+@media(max-width:600px){body{font-size:15px}.page{padding:20px 15px 40px}.top-nav{gap:9px 18px}article h2{font-size:1.25rem;margin-top:34px}img{margin:18px auto;border-radius:7px}pre{padding:14px;font-size:12px}th,td{padding:11px 12px}}
+</style>
+</head>
+<body>
+<main class="page">
+<nav class="top-nav" aria-label="指南导航"><a href="../index.html">← 返回应用</a><a href="guide.en.html" lang="en">English guide</a><a href="https://github.com/biaogebaofu/iching-cycle-backtest">GitHub</a></nav>
+<header class="masthead"><p class="eyebrow">I CHING CYCLE CALENDAR &amp; BACKTEST / 易经周期日历与回测</p><h1>v0.2.0 图文快速上手 · Illustrated Quick Start</h1><p class="subtitle">不需要懂程序：对照真实界面按钮，按图操作。</p></header>
+<article><p><a href="https://github.com/biaogebaofu/iching-cycle-backtest/blob/main/README.md">项目说明</a> · <a href="guide.en.html">English</a> · <a href="https://biaogebaofu.github.io/iching-cycle-backtest/">网页入口</a> · <a href="risk.html">使用边界</a></p>
+<p><strong>纯属娱乐与模型研究，不用于投资决策。免费，无返佣。</strong></p>
+<h2>1. 打开后应该看到什么</h2>
+<p><img loading="lazy" decoding="async" src="images/01-start.png" alt="默认连接页面：没有自动请求OKX，也没有行情、回测或方向"></p>
+<p>默认页只显示用途、地区与连接说明。不会自动请求 OKX，不预装真实行情，也不会自动给出当前方向、回测结果或日历。无需在页面输入账户、密码或 API 密钥。</p>
+<p>手机、平板和电脑都用浏览器打开同一网页。界面主要为中文，中英文文档辅助阅读；无需 Python、Node.js 或 Git。</p>
+<h2>2. 本人确认地区和使用资格</h2>
+<p>先阅读页面说明与<a href="risk.html">使用边界</a>，再根据真实情况作出地区和用途声明。</p>
+<p><img loading="lazy" decoding="async" src="images/02-restricted.png" alt="未选择地区或声明受限地区时，连接功能保持不可用"></p>
+<p>在“使用地区”如实选择。只有“中国大陆以外，且已确认当地和平台允许”，并由本人确认已读说明后，才可以主动连接。“中国大陆”“其他受限地区 / 尚未确认”和“请选择”均不开放连接。</p>
+<ul>
+<li>未作出地区选择时不能连接。</li>
+<li>中国大陆及其他受限地区不能使用数据连接功能。</li>
+<li>选择其他地区不等于通过法律或 OKX 资格审核；仍需本人确认符合当地规定与 OKX 条件。</li>
+<li>地区选择是自声明，不使用 IP 封锁或法律认证。请不要用代理或虚假声明绕过限制。</li>
+</ul>
+<p>“免费”“娱乐”和“免密”都不是第三方数据授权。没有把握是否可以使用时，请停止，不要连接。</p>
+<h2>3. 主动连接公开行情</h2>
+<p>只在有使用资格、理解用途与数据条件后，按以下步骤由本人操作：</p>
+<ol>
+<li>在“适用的 OKX 官方服务区域”选择本人适用的服务：全球服务、美国 / 澳大利亚或欧洲经济区。不能为解决连接失败而换成不适用的区域，不同服务也未必提供 ETH-USDT-SWAP。</li>
+<li>在“请求历史范围”选择“最近 90 天”“最近 1 年”或“最近 3 年”，默认最近 1 年。该选项是请求目标，不保证取得完整范围。</li>
+<li>本人阅读用途、风险及官方条款，仅在如实确认符合条件时勾选页面声明。</li>
+<li>点“连接并读取公开行情”。加载中可点“取消 / 清除本次数据”终止请求。</li>
+</ol>
+<p>浏览器向所选 OKX 官方域名直接发送只读 GET 请求。免密端点不需要你在本页输入密钥，不登录账户、不读取私人仓位、不下单。</p>
+<p>加载完成后，先看页面标注的<strong>本次数据范围、K 线数量和截止时间</strong>。没有固定的旧版快照覆盖范围，也不保证最新行情已完整取得。网络、地区限制、CORS 或其他错误导致连接失败时，会停止，不换代理、不用旧行情或合成数据填充结果。</p>
+<p>本项目不持续自动拉取行情。每次请求由用户主动发起；刷新页面后需本人重新检查条件并主动连接。</p>
+<h2>4. 连接成功后阅读界面</h2>
+<p>数据请求成功后才显示图表和时间日历；<strong>回测结果还需另点“运行回测”</strong>。页面日期按北京时间 UTC+08:00 显示，当前时刻由设备时钟换算。日历卡片使用“模型正向（假设）”“模型反向（假设）”标签，只用于解释固定规则。</p>
+<p>图表仍可选择“图1 / 日线范围”“图2范围”“未来信号”，使用“重绘图表”或“展开日线与最近 2H 图表”。图表范围和回测日期分别设置。2H 是 2 小时 K 线：价格使用该根收盘值，横轴按开始时间标注。未来公式信号没有未来真实价格。</p>
+<h3>两套口径分别看</h3>
+<div class="table-scroll" tabindex="0" role="region" aria-label="表格，可左右滚动查看全部列"><table>
+<thead>
+<tr>
+<th>回测口径</th>
+<th>假设统计方法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>方向日历 · 中点切换基准</td>
+<td>红高带中点对应假设空方向，绿深带中点对应假设多方向。向上对齐到首根开始时间不早于中点的 2H K 线，以该根收盘价计算入场，到下一相反事件的收盘价计算退出。起点前的假设持仓不带入。</td>
+</tr>
+<tr>
+<td>原 Bias · 固定持有统计</td>
+<td>每根 2H K 线开始时算 Bias，高于 +0.1 为假设多方向，低于 −0.1 为假设空方向，中间及边界不产生样本。以该根收盘价比较 2、6、12、24、72、168 小时后的收盘价。</td>
+</tr>
+</tbody></table></div>
+<p>原 Bias 图红色偏多、绿色偏空；日历中点规则红高带对应空、绿深带对应多。两套红绿含义与结果不能混算。这些方向只是娱乐模型标签，不用于投资决策。</p>
+<h2>5. 合成图只用来学会读结果</h2>
+<p><img loading="lazy" decoding="async" src="images/03-entertainment-demo.png" alt="明确标注的合成数据演示：仅解释界面，不是真实行情或实际收益"></p>
+<p><strong>本图使用合成数据，不是 OKX 行情，不对应真实市场表现。</strong> 它只说明结果区如何阅读，公开应用不会自动载入这份文档演示数据。请不要把它当作可复现的真实收益或产品自带行情。</p>
+<p>连接后的回测操作是在“回测口径”选择方法，按实际加载范围填写“起始日期（北京时间）”“结束日期（含）”和“单边成本（bps）”，再点“运行回测”。改变日期或成本后重新运行。可用数据不足时可能没有完成样本。</p>
+<h3>成本参数不收费</h3>
+<p>1 bps = 0.01%。填写 5 bps 表示模型假设的单边手续费与滑点合计为 0.05%；完成往返扣 0.10%，未完成中点段只扣已发生的假设入场成本。默认 0 复现毛收益统计。这里的成本输入不会扣款。</p>
+<p>统计不包含资金费、杠杆、保证金或强平，也不模拟实际成交。空方向线性收益甚至可能低于 −100%，不能理解为账户能承受并完成该段交易。</p>
+<h3>结果表怎么看</h3>
+<div class="table-scroll" tabindex="0" role="region" aria-label="表格，可左右滚动查看全部列"><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>已完成样本 / 样本数</td>
+<td>有可验证入场与退出价格、实际进入这项假设统计的数量。</td>
+</tr>
+<tr>
+<td>扣成本胜率</td>
+<td>扣假设成本后收益严格大于零的完成样本比例；零收益不算胜利。</td>
+</tr>
+<tr>
+<td>单样本平均 / 扣成本平均</td>
+<td>扣成本收益的算术平均，可能被少数极端样本拉动。</td>
+</tr>
+<tr>
+<td>单样本中位数 / 扣成本中位数</td>
+<td>将收益排序后的中间水平。</td>
+</tr>
+<tr>
+<td>毛收益 / 平均毛收益</td>
+<td>尚未扣模型成本的方向收益或其平均值。</td>
+</tr>
+<tr>
+<td>未完成 · 快照估值</td>
+<td>中点段尚未完成退出，按截止范围内最后可用收盘价估值，不计入完成样本汇总。</td>
+</tr>
+<tr>
+<td>缺失事件跳过 / 缺口跳过</td>
+<td>缺少准确入场或退出 K 线，或固定持有窗口存在缺口；对应项跳过，不当作零收益。</td>
+</tr>
+<tr>
+<td>—</td>
+<td>可能没有可统计的完成样本，不等于收益为零。</td>
+</tr>
+</tbody></table></div>
+<p>固定持有样本可能重叠；不能相加、累乘成账户资金曲线，不能混合不同持有时间或两种口径作年化推断。均值、中位数和胜率都是假设统计，不是未来盈利证据。只有收盘价时不计算盘中最大不利变动（MAE）。</p>
+<p>连接后显示的日历继续使用原时间公式。当前/下一阶段和未来阶段均是娱乐研究输出，不是未来价格预测。具体窗口与“生效时间（含）”“结束时间（不含）”以页面为准。</p>
+<h2>6. 清空、刷新和本地包</h2>
+<p>使用完可点“取消 / 清除本次数据”，或刷新页面。该按钮也能取消正在加载的请求。行情与计算结果只保存在当前页面内存中，清除或刷新后丢弃，研究内容隐藏；不自动保存为行情文件，也不写回公开仓库。</p>
+<p>电脑下载官方 <a href="https://github.com/biaogebaofu/iching-cycle-backtest/releases">Release</a> 的 ZIP 后，先完整解压，再打开 index.html，保留 assets 和 docs 目录。本地包可以打开界面与教程，<strong>没有预装真实行情</strong>；真实行情与后续展示仍需要符合条件并主动联网连接。无网或连接被阻时不能运行带真实行情的研究。手机可收藏网页；主屏幕快捷入口不保证离线可用。</p>
+<h2>常见情况</h2>
+<div class="table-scroll" tabindex="0" role="region" aria-label="表格，可左右滚动查看全部列"><table>
+<thead>
+<tr>
+<th>情况</th>
+<th>处理方式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>首次打开没有图表或方向</td>
+<td>这是默认空状态；不要寻找旧版自动行情。只有符合条件、主动连接成功后才展示。</td>
+</tr>
+<tr>
+<td>地区未选择或属于受限地区</td>
+<td>保持停止。不要虚假声明或寻找代理绕过。</td>
+</tr>
+<tr>
+<td>网络或 CORS 错误</td>
+<td>请求停止。不尝试代理规避；技术可达也不证明使用资格。</td>
+</tr>
+<tr>
+<td>刷新后数据消失</td>
+<td>本版本只在内存中保存会话数据；这是预期行为。</td>
+</tr>
+<tr>
+<td>没有完成样本</td>
+<td>检查本次返回的数据范围与所选日期。没有结果也不要用文档合成图代替真实数据。</td>
+</tr>
+<tr>
+<td>想分享内容</td>
+<td>分享官方源码或说明链接，不擅自公开 OKX 行情、带真实行情的图片或数据包。</td>
+</tr>
+</tbody></table></div>
+<p>保留所有权利，许可范围见 <a href="../LICENSE">LICENSE</a>。本指南不宣称旧 Git 提交、旧截图或旧发布包已经清除。报告问题时不要附带账户、密钥、私人信息或完整行情数据。</p>
+</article>
+<footer>© 2026 biaogebaofu · 保留所有权利 / All rights reserved · v0.2.0 · <a href="../LICENSE">版权与使用范围</a></footer>
+</main>
+</body>
+</html>
